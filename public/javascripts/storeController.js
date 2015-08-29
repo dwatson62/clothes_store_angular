@@ -4,6 +4,8 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
   self.category;
   self.shoppingCart = [];
   self.subTotal = 0;
+  self.discount = 0;
+  self.total = 0;
   self.bestVoucher = false;
 
   $('.dropdown-toggle').dropdown();
@@ -12,6 +14,7 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     $http.get('/javascripts/seedData.json').
       then(function(response) {
         self.products = response.data;
+        self.showProducts = self.products;
         self.getCategories();
       });
     $http.get('/javascripts/seedVouchers.json').
@@ -26,15 +29,9 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
 
   self.getBestVoucher = function() {
     for (var i in self.vouchers) {
-      var count = 0;
       var currentVoucher = self.vouchers[i];
-      for (var j in self.shoppingCart) {
-        var currentItem = self.shoppingCart[j];
-        if (currentItem.category.includes(currentVoucher.condition)) {
-          count += currentItem.quantity;
-        }
-      }
-      if (self.vouchers[i].minimum_order <= self.subTotal && currentVoucher.minimum_number <= count) {
+      var count = self.getQuantityOfVoucherCondition(currentVoucher);
+      if (currentVoucher.minimum_order <= self.subTotal && currentVoucher.minimum_number <= count) {
         self.bestVoucher = currentVoucher;
         return;
       }
@@ -42,22 +39,43 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     self.bestVoucher = false;
   };
 
+  self.getQuantityOfVoucherCondition = function(currentVoucher) {
+    var count = 0;
+    _.each(self.shoppingCart, function(currentItem) {
+      if (currentItem.category.includes(currentVoucher.condition)) {
+        count += currentItem.quantity;
+      }
+    });
+    return count;
+  };
+
+  self.applyVoucher = function() {
+    self.discount = self.bestVoucher.discount;
+    self.total = self.subTotal - self.discount;
+  };
+
   self.getCategories = function() {
-    var categories = []
-    for (var i in self.products) {
-      categories.push(self.products[i].category);
-    }
+    var categories =  _.pluck(self.products, 'category');
     self.categories = _.uniq(categories).sort();
   };
 
   self.showCategories = function(category) {
     // this will be used to filter products by category
-    self.products
+
+    // self.showProducts =  _.pluck(self.products, function(element) {
+    //   return element.category === category
+    // });
   };
 
   self.addToCart = function(item) {
     if (self.checkItemAlreadyInCart(item) === false) {
-      self.shoppingCart.push( {'name': item.name, 'category': item.category, 'price': item.price, 'quantity': 1 } );
+      var newProduct = {
+        'name': item.name,
+        'category': item.category,
+        'price': item.price,
+        'quantity': 1
+      }
+      self.shoppingCart.push(newProduct);
     }
     self.decreaseProductQuantity(item);
     self.subTotal = self.calculateSubTotal();
@@ -65,19 +83,15 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
   };
 
   self.decreaseProductQuantity = function(item) {
-    for (var i in self.products) {
-      if (item === self.products[i]) {
-        self.products[i].quantity -= 1;
-      }
-    }
+    _.each(self.products, function(element) {
+      if (item === element) { element.quantity -= 1; }
+    });
   };
 
   self.increaseProductQuantity = function(item) {
-    for (var i in self.products) {
-      if (item.name === self.products[i].name) {
-        self.products[i].quantity += item.quantity;
-      }
-    }
+    _.each(self.products, function(element) {
+      if (item.name === element.name) { element.quantity += item.quantity; }
+    });
   };
 
   self.checkItemAlreadyInCart = function(item) {
@@ -91,28 +105,35 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
   };
 
   self.calculateSubTotal = function() {
-    var total = 0;
-    for (var i in self.shoppingCart) {
-      var currentItem = self.shoppingCart[i];
-      total += (currentItem.price * currentItem.quantity);
-    }
+    var total = _.reduce(self.shoppingCart, function(sum, item) {
+      return sum + (item.price * item.quantity)
+    }, 0);
+    self.removeDiscounts();
     return total;
   };
 
+  self.removeDiscounts = function() {
+    self.discount = 0;
+    self.total = 0;
+  };
+
   self.removeFromCart = function(item) {
+    var itemToBeRemoved = _.find(self.shoppingCart, function(element) {
+      return element.name === item.name
+    })
     var updatedCart = _.filter(self.shoppingCart, function(product) {
       product.name === item.name;
     });
     self.shoppingCart = updatedCart;
     self.subTotal = self.calculateSubTotal();
-    self.increaseProductQuantity(item);
+    self.increaseProductQuantity(itemToBeRemoved);
     self.getBestVoucher();
   };
 
   self.emptyCart = function() {
-    for (var i in self.shoppingCart) {
-      self.increaseProductQuantity(self.shoppingCart[i]);
-    }
+    _.each(self.shoppingCart, function(element) {
+      self.increaseProductQuantity(element);
+    });
     self.shoppingCart = [];
     self.subTotal = self.calculateSubTotal();
     self.getBestVoucher();

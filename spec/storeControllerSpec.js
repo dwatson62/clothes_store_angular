@@ -91,7 +91,7 @@ describe('Store Controller', function () {
         expect(ctrl.shoppingCart.length).toEqual(0);
       });
 
-      xit('restores previous stock level', function() {
+      it('restores previous stock level', function() {
         ctrl.removeFromCart(ctrl.products[0]);
         expect(ctrl.products[0].quantity).toEqual(5);
       });
@@ -107,7 +107,7 @@ describe('Store Controller', function () {
         expect(ctrl.shoppingCart.length).toEqual(0);
       });
 
-      xit('emptying restores stock levels', function() {
+      it('emptying restores stock levels', function() {
         ctrl.addToCart(ctrl.products[1]);
         ctrl.emptyCart();
         expect(originalQuantity1).toEqual(ctrl.products[0].quantity);
