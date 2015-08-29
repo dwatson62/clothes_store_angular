@@ -17,8 +17,11 @@ module.exports = function(config) {
     files: [
         'bower_components/angular/angular.js',
         'bower_components/angular-mocks/angular-mocks.js',
+        'bower_components/angular-route/angular-route.js',
+        'bower_components/angular-resource/angular-resource.js',
         'bower_components/jquery/dist/jquery.js',
         'bower_components/bootstrap/js/dropdown.js',
+        'node_modules/underscore/underscore.js',
         'public/javascripts/*.js',
         'spec/*.js',
     ],
