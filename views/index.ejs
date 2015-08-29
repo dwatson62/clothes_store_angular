@@ -3,13 +3,32 @@
   <head>
     <title>Clothes Store</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/js/dropdown.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="node_modules/underscore/underscore.js"></script>
     <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
     <script src="/javascripts/angularApp.js"></script>
     <script src="/javascripts/storeController.js"></script>
   </head>
-  <body>
-    <h1>Clothes Store</h1>
-    <p>Welcome to my Clothes Store</p>
+  <header>
+    <% include navbar %>
+  </header>
+  <body ng-controller='StoreControl as storectrl' ng-init='storectrl.init()'>
+    <div class="row">
+      <div class="col-md-8">
+        <div id="stuff" ng-repeat="product in storectrl.products track by $index">
+          <img class="product-images" ng-src="/images/items{{$index}}.jpg" height='150'></img>
+          <p>{{ product.name }} <i> {{ product.price | currency: "£"}} </i> </p><button ng-click='storectrl.addToCart(product)'>Add to Cart</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>Shopping Cart</h3>
+        <div id='cart' ng-repeat='item in storectrl.shoppingCart'>
+          {{ item.quantity }}x {{ item.name }} {{ item.price }}
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
