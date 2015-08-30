@@ -1,5 +1,6 @@
 beforeEach(function(){
   browser.get('http://localhost:3000');
+  element(by.id('category4')).click();
 });
 
 var almondToeCourtShoes = element(by.id('product-btn0'));
@@ -13,9 +14,6 @@ describe('Clothes Store', function() {
 
   describe('Upon page load', function() {
 
-    var reducedItem = element(by.id('product8'))
-    var outOfStockItem = element(by.id('outOfStock-4'));
-
     it('Has a title', function () {
       expect(browser.getTitle()).toEqual('Clothes Store');
     });
@@ -25,15 +23,19 @@ describe('Clothes Store', function() {
     });
 
     it('Out of stock items are displayed as so', function() {
+      element(by.id('category1')).click();
+      var outOfStockItem = element(by.id('outOfStock-2'));
       expect(outOfStockItem.getText()).toContain('Out of Stock');
     });
 
     it('Displays a list of products', function() {
-      var productList = element.all(by.repeater('product in storeCtrl.showProducts'));
+      var productList = element.all(by.repeater('product in storeCtrl.currentProducts'));
       expect(productList.count()).toBeGreaterThan(0);
     });
 
     it('If product is reduced, old price is also displayed', function() {
+      element(by.id('category0')).click();
+      var reducedItem = element(by.id('product1'));
       expect(reducedItem.getText()).toContain('£49.99 £39.99')
     });
 
@@ -109,7 +111,7 @@ describe('Clothes Store', function() {
       blueSuedeShoes.click();
       expect(voucherBtn.getText()).toEqual('£5 off your order');
       almondToeCourtShoes.click();
-      expect(voucherBtn.getText()).toEqual('£15 off when you have bought at least one footwear item and spent over $75.00');
+      expect(voucherBtn.getText()).toEqual('£15 off when you buy at least one footwear item and spend over £75.00');
     });
 
     it('When voucher is added, totals are updated', function() {

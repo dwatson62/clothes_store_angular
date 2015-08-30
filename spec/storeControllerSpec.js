@@ -55,7 +55,7 @@ describe('Store Controller', function () {
       });
 
       it('updates subtotal automatically', function() {
-        expect(ctrl.calculateSubTotal()).toEqual(99);
+        expect(ctrl.subTotal).toEqual(99);
       });
 
     });
@@ -73,7 +73,7 @@ describe('Store Controller', function () {
       });
 
       it('updates subtotal automatically', function() {
-        expect(ctrl.calculateSubTotal()).toEqual(198);
+        expect(ctrl.subTotal).toEqual(198);
       });
 
     });

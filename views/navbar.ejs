@@ -1,6 +1,6 @@
 <center>
   <span ng-repeat="category in storeCtrl.categories track by $index">
-    <button class="btn btn-success" ng-click='storeCtrl.showOneCategory(category)'>{{category}}</button></li>
+    <button class="btn btn-success" id='category{{$index}}' ng-click='storeCtrl.showOneCategory(category)'>{{category}}</button></li>
   </span>
 </center>
 <br>
