@@ -142,6 +142,10 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     if (self.shoppingCart.length === 0) { return true; }
   };
 
+  self.noDiscountApplied = function() {
+    if (self.discount === 0) { return true; }
+  };
+
   self.outOfStock = function(item) {
     if (item.quantity === 0) { return true; }
   };

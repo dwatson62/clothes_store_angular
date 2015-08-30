@@ -1,9 +1,9 @@
 <h3>Shopping Cart</h3>
   <div id='vouchers' ng-model='storeCtrl.bestVoucher'>
-    <p><button ng-show="storeCtrl.bestVoucher" ng-click="storeCtrl.applyVoucher()">{{ storeCtrl.bestVoucher.description }}</button></p>
+    <p><button id='best-voucher-btn' ng-show="storeCtrl.bestVoucher" ng-click="storeCtrl.applyVoucher()">{{ storeCtrl.bestVoucher.description }}</button></p>
   </div>
   <div id='shopping-cart'>
-    <p id='empty-cart' ng-show='storeCtrl.hasEmptyCart()'>Empty!</p>
+    <p id='empty-cart-msg' ng-show='storeCtrl.hasEmptyCart()'>Empty!</p>
     <div id='cart' ng-repeat='item in storeCtrl.shoppingCart'>
       <p>{{ item.quantity }}x {{ item.name }} {{ item.price | currency: "£" }}</p>
       <p><button id='removeproduct-{{$index}}' ng-click="storeCtrl.removeFromCart(item)">Remove</button></p>
@@ -11,8 +11,8 @@
   </div>
   <div id='totals' ng-hide='storeCtrl.hasEmptyCart()'>
     <p ng-model='storeCtrl.subTotal'>Total: {{ storeCtrl.subTotal | currency: "£" }}</p>
-    <p ng-model='storeCtrl.discount'>Discount: {{ storeCtrl.discount | currency: "£" }}</p>
-    <p ng-model='storeCtrl.discountedTotal'>Discounted total: {{ storeCtrl.discountedTotal | currency: "£" }}</p>
-    <button ng-click='storeCtrl.emptyCart()'>Empty Cart</button>
+    <p id='applied-discount' ng-hide='storeCtrl.noDiscountApplied()' ng-model='storeCtrl.discount'>Discount: {{ storeCtrl.discount | currency: "£" }}</p>
+    <p id='discounted-total' ng-hide='storeCtrl.noDiscountApplied()'ng-model='storeCtrl.discountedTotal'>Discounted total: {{ storeCtrl.discountedTotal | currency: "£" }}</p>
+    <button id='empty-cart-btn' ng-click='storeCtrl.emptyCart()'>Empty Cart</button>
   </div>
 </div>

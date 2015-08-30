@@ -3,54 +3,130 @@ beforeEach(function(){
 });
 
 var almondToeCourtShoes = element(by.id('product-btn0'));
-var outOfStockItem = element(by.id('outOfStock-4'));
+var blueSuedeShoes = element(by.id('product-btn1'));
 var subTotal = element(by.model('storeCtrl.subTotal'));
 var shoppingCart = element(by.id('cart'));
-var emptyCart = element(by.id('empty-cart'));
+var emptyCartMsg = element(by.id('empty-cart-msg'));
+var emptyCartBtn = element(by.id('empty-cart-btn'));
 
 describe('Clothes Store', function() {
 
-  it('Has a title', function () {
-    expect(browser.getTitle()).toEqual('Clothes Store');
+  describe('Upon page load', function() {
+
+    var reducedItem = element(by.id('product8'))
+    var outOfStockItem = element(by.id('outOfStock-4'));
+
+    it('Has a title', function () {
+      expect(browser.getTitle()).toEqual('Clothes Store');
+    });
+
+    it('Starts with an empty cart', function() {
+      expect(emptyCartMsg.getText()).toEqual('Empty!');
+    });
+
+    it('Out of stock items are displayed as so', function() {
+      expect(outOfStockItem.getText()).toContain('Out of Stock');
+    });
+
+    it('Displays a list of products', function() {
+      var productList = element.all(by.repeater('product in storeCtrl.showProducts'));
+      expect(productList.count()).toBeGreaterThan(0);
+    });
+
+    it('If product is reduced, old price is also displayed', function() {
+      expect(reducedItem.getText()).toContain('£49.99 £39.99')
+    });
+
+    it('Subtotal is not displayed when cart is empty', function() {
+      expect(subTotal.isDisplayed()).toBeFalsy();
+    });
+
   });
 
-  it('Starts with an empty cart', function() {
-    expect(emptyCart.getText()).toEqual('Empty!');
-  });
+  describe('While shopping', function() {
 
-  it('Can add an item, and have it appear in the cart', function() {
-    almondToeCourtShoes.click();
-    expect(shoppingCart.getText()).toContain('1x Almond Toe Court Shoes');
-  });
-
-  it('Out of stock items are displayed as so', function() {
-    expect(outOfStockItem.getText()).toContain('Out of Stock');
-  });
-
-  it('Adding to the cart updates the total', function() {
-    almondToeCourtShoes.click();
-    expect(subTotal.getText()).toEqual('Total: £99.00');
-  });
-
-  it('Adding multiples of same item updates the cart quantity', function() {
-    almondToeCourtShoes.click();
-    almondToeCourtShoes.click();
-    expect(shoppingCart.getText()).toContain('2x Almond Toe Court Shoes');
-  });
-
-  it('When last item is ordered, it is displayed as out of stock', function() {
-    // This item has stock quantity of 5
-    for (i = 0; i < 5; i ++) {
+    beforeEach(function() {
       almondToeCourtShoes.click();
-    }
-    var shoesOutOfStock = element(by.id('outOfStock-0'));
-    expect(shoesOutOfStock.getText()).toContain('Out of Stock');
+    });
+
+    it('items appears in the cart', function() {
+      expect(shoppingCart.getText()).toContain('1x Almond Toe Court Shoes');
+    });
+
+    it('Adding to the cart updates the total', function() {
+      expect(subTotal.getText()).toEqual('Total: £99.00');
+    });
+
+    it('Adding multiples of same item updates the cart quantity', function() {
+      almondToeCourtShoes.click();
+      expect(shoppingCart.getText()).toContain('2x Almond Toe Court Shoes');
+    });
+
+    it('When last item is ordered, it is displayed as out of stock', function() {
+      // This item has stock quantity of 5
+      for (i = 0; i < 4; i ++) {
+        almondToeCourtShoes.click();
+      }
+      var shoesOutOfStock = element(by.id('outOfStock-0'));
+      expect(shoesOutOfStock.getText()).toContain('Out of Stock');
+    });
+
+    it('Can remove items from the cart', function() {
+      var removeItem = element(by.id('removeproduct-0'));
+      removeItem.click();
+      expect(emptyCartMsg.getText()).toEqual('Empty!');
+    });
+
+    it('Can remove all items from the cart', function() {
+      blueSuedeShoes.click();
+      emptyCartBtn.click();
+      expect(emptyCartMsg.getText()).toEqual('Empty!');
+    });
+
   });
 
-  it('Can remove items from the cart', function() {
-    almondToeCourtShoes.click();
-    var removeItem = element(by.id('removeproduct-0'));
-    removeItem.click();
-    expect(emptyCart.getText()).toEqual('Empty!');
+  describe('Vouchers', function() {
+
+    var discount = element(by.id('applied-discount'));
+    var discountedTotal = element(by.id('discounted-total'));
+    var voucherBtn = element(by.id('best-voucher-btn'));
+
+    it('Displays no voucher when cart is empty', function() {
+      expect(voucherBtn.isDisplayed()).toBeFalsy();
+    });
+
+    it('Discounted totals are hidden if voucher is not applied', function() {
+      expect(discount.isDisplayed()).toBeFalsy();
+      expect(discountedTotal.isDisplayed()).toBeFalsy();
+    });
+
+    it('When products are added, voucher button is displayed', function() {
+      almondToeCourtShoes.click();
+      expect(voucherBtn.isDisplayed()).toBeTruthy();
+    });
+
+    it('When more products are added, an improved voucher is displayed', function() {
+      blueSuedeShoes.click();
+      expect(voucherBtn.getText()).toEqual('£5 off your order');
+      almondToeCourtShoes.click();
+      expect(voucherBtn.getText()).toEqual('£15 off when you have bought at least one footwear item and spent over $75.00');
+    });
+
+    it('When voucher is added, totals are updated', function() {
+      almondToeCourtShoes.click();
+      voucherBtn.click();
+      expect(discount.getText()).toEqual('Discount: £15.00');
+      expect(discountedTotal.getText()).toEqual('Discounted total: £84.00');
+    });
+
+    it('When item is removed, applied voucher is also removed', function() {
+      almondToeCourtShoes.click();
+      voucherBtn.click();
+      emptyCartBtn.click();
+      expect(discount.isDisplayed()).toBeFalsy();
+      expect(discountedTotal.isDisplayed()).toBeFalsy();
+    });
+
   });
+
 });

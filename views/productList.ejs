@@ -1,6 +1,6 @@
 <div id="product-list" ng-repeat="product in storeCtrl.showProducts track by $index">
   <img class="product-images" ng-src="/images/items{{$index}}.jpg" height='150'></img>
-  <p>{{ product.quantity }} {{ product.name }} <i> <strike> {{ product.old_price | currency: "£" }} </strike> {{ product.price | currency: "£"}} </i> </p>
+  <p id='product{{ $index }}'>{{ product.quantity }} {{ product.name }} <i> <strike> {{ product.old_price | currency: "£" }} </strike> {{ product.price | currency: "£"}} </i> </p>
   <button class='addtocart-btn' id='product-btn{{ $index }}' ng-hide='storeCtrl.outOfStock(product)' ng-click='storeCtrl.addToCart(product)'>Add to Cart</button>
   <p id='outOfStock-{{ $index }}' ng-show='storeCtrl.outOfStock(product)'><i>Out of Stock</i></p>
 </div>
