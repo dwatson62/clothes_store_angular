@@ -26,11 +26,16 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   };
 
   self.showOneCategory = function(category) {
-    self.currentProducts = _.where(self.products, { category: category } )
+    self.currentProducts = _.where(self.products, { category: category } );
   };
 
   self.hasEmptyCart = function() {
     if (self.shoppingCart.length === 0) { return true; }
+  };
+
+  self.availableVoucher = function() {
+    if (self.shoppingCart.length === 0) { return false; }
+    if (self.bestVoucher) { return true; }
   };
 
   self.noDiscountApplied = function() {
@@ -42,7 +47,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   };
 
   self.getBestVoucher = function() {
-    var config = {'subTotal': self.subTotal, 'vouchers': self.vouchers, 'cart': self.shoppingCart}
+    var config = { 'subTotal': self.subTotal, 'vouchers': self.vouchers, 'cart': self.shoppingCart };
     self.bestVoucher = Voucher.getBestVoucher(config);
   };
 
@@ -58,20 +63,21 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
 
   self.addToCart = function(item) {
     Cart.addToCart(self.shoppingCart, item);
-    Shop.decreaseProductQuantity(self.products, item)
+    Shop.decreaseProductQuantity(self.products, item);
     self.calculateSubTotal();
     self.getBestVoucher();
   };
 
   self.calculateSubTotal = function() {
     self.subTotal = Shop.calculateSubTotal(self.shoppingCart);
-  }
+  };
 
   self.removeFromCart = function(item) {
-    var itemToBeRemoved = Cart.findItemInCart(self.shoppingCart, item)
+    var itemToBeRemoved = Cart.findItemInCart(self.shoppingCart, item);
     self.shoppingCart = Cart.removeFromCart(self.shoppingCart, itemToBeRemoved);
-    self.subTotal = Shop.calculateSubTotal();
+    Shop.calculateSubTotal();
     Shop.increaseProductQuantity(self.products, itemToBeRemoved);
+    self.removeDiscounts();
     self.getBestVoucher();
   };
 

@@ -7,8 +7,6 @@ Clothes Store Angular
 
 ## Synopsis
 
-## Synopsis
-
 This website mimics an online clothes store. Its features are:
 
 - Displays specified products with: description, category, current price (and old price if given) and availability.
@@ -57,6 +55,6 @@ In seperate windows:
 ## Technologies Used
 
 - Language: NodeJS
-- Libraries: UnderscoreJS, Jquery, Bootstrap
+- Libraries: UnderscoreJS, Bootstrap
 - Frameworks: Angular, Express
 - Testing: Karma, Jasmine, Protractor

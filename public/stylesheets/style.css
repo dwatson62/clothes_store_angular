@@ -8,6 +8,7 @@ a {
 }
 
 #product-list {
+  padding-left: 40px;
   padding-top: 25px;
   display: inline-table;
 }
@@ -23,13 +24,9 @@ body.ng-scope {
 .product-box {
   text-align: center;
   vertical-align: center;
-  width: 200px;
-  height: 220px;
+  width: 300px;
+  height: 320px;
   /*border: 1px solid black;*/
-}
-
-.addtocart-btn {
-  float: 50px;
 }
 
 #best-voucher-btn {
@@ -39,12 +36,13 @@ body.ng-scope {
 
 .product-images {
   border: 1px solid black;
-  width: 160px;
-  height: 140px;
+  width: 200px;
+  height: 200px;
 }
 
 .product-description {
   height: 35px;
+  font-size: 16px;
 }
 
 .btn-success.ng-binding {
@@ -54,4 +52,8 @@ body.ng-scope {
   color: black;
   height: 50px;
   width: 185px;
+}
+
+.description {
+  font-size: 18px;
 }
