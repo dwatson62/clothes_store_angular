@@ -33,6 +33,7 @@ body.ng-scope {
 }
 
 #best-voucher-btn {
+  background-color: green;
   width: 200px;
 }
 

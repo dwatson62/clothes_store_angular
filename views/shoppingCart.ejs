@@ -1,7 +1,7 @@
 <center>
   <h3 class='text-primary' >Shopping Cart</h3>
   <div id='vouchers' ng-model='storeCtrl.bestVoucher'>
-    <p><button class="btn btn-success" id='best-voucher-btn' ng-show="storeCtrl.bestVoucher" ng-click="storeCtrl.applyVoucher()">{{ storeCtrl.bestVoucher.description }}</button></p>
+    <p><button id='best-voucher-btn' ng-show="storeCtrl.bestVoucher" ng-click="storeCtrl.applyVoucher()">{{ storeCtrl.bestVoucher.description }}</button></p>
   </div>
   <div id='shopping-cart'>
     <p id='empty-cart-msg' ng-show='storeCtrl.hasEmptyCart()'>Empty!</p>

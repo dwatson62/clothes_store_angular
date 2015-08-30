@@ -1,51 +1,26 @@
-var storeController = app.controller('StoreControl', ['$http', function($http) {
+var storeController = app.controller('StoreControl', ['$http', 'VoucherService', function($http, VoucherService) {
 
   var self = this;
   self.shoppingCart = [];
-  self.subTotal = 0;
-  self.discount = 0;
-  self.discountedTotal = 0;
-  self.bestVoucher = false;
 
-  $('.dropdown-toggle').dropdown();
+  var VoucherService = new VoucherService();
 
   self.init = function() {
     $http.get('/javascripts/seedData.json').
       then(function(response) {
         self.products = response.data;
-        self.showProducts = self.products;
         self.getCategories();
+        self.showOneCategory(self.categories[0]);
       });
     $http.get('/javascripts/seedVouchers.json').
       then(function(response) {
-        self.sortVouchers(response.data);
+        self.vouchers = _.sortBy(response.data, 'discount').reverse();
       });
   };
 
-  self.sortVouchers = function(vouchers) {
-    self.vouchers = _.sortBy(vouchers, 'discount').reverse();
-  };
-
   self.getBestVoucher = function() {
-    for (var i in self.vouchers) {
-      var currentVoucher = self.vouchers[i];
-      var count = self.getQuantityOfVoucherCondition(currentVoucher);
-      if (currentVoucher.minimum_order <= self.subTotal && currentVoucher.minimum_number <= count) {
-        self.bestVoucher = currentVoucher;
-        return;
-      }
-    }
-    self.bestVoucher = false;
-  };
-
-  self.getQuantityOfVoucherCondition = function(currentVoucher) {
-    var count = 0;
-    _.each(self.shoppingCart, function(currentItem) {
-      if (currentItem.category.includes(currentVoucher.condition)) {
-        count += currentItem.quantity;
-      }
-    });
-    return count;
+    var config = {'subTotal': self.subTotal, 'vouchers': self.vouchers, 'cart': self.shoppingCart}
+    self.bestVoucher = VoucherService.getBestVoucher(config);
   };
 
   self.applyVoucher = function() {
@@ -58,12 +33,8 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     self.categories = _.uniq(categories).sort();
   };
 
-  self.showCategories = function(category) {
-    // this will be used to filter products by category
-
-    // self.showProducts =  _.pluck(self.products, function(element) {
-    //   return element.category === category
-    // });
+  self.showOneCategory = function(category) {
+    self.currentProducts = _.where(self.products, { category: category } )
   };
 
   self.addToCart = function(item) {
@@ -120,10 +91,9 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     var itemToBeRemoved = _.find(self.shoppingCart, function(element) {
       return element.name === item.name;
     });
-    var updatedCart = _.filter(self.shoppingCart, function(product) {
-      product.name === item.name;
+    self.shoppingCart = _.filter(self.shoppingCart, function(product) {
+      return product != itemToBeRemoved;
     });
-    self.shoppingCart = updatedCart;
     self.subTotal = self.calculateSubTotal();
     self.increaseProductQuantity(itemToBeRemoved);
     self.getBestVoucher();

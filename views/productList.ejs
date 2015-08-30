@@ -1,5 +1,5 @@
 <center>
-  <div id="product-list" ng-repeat="product in storeCtrl.showProducts track by $index">
+  <div id="product-list" ng-repeat="product in storeCtrl.currentProducts track by $index">
     <div class='product-box'>
       <img class="product-images" ng-src="/images/items{{$index}}.jpg"></img>
       <p class='product-description' id='product{{ $index }}'>{{ product.name }} <i> <strike> {{ product.old_price | currency: "£" }} </strike> {{ product.price | currency: "£"}} </i> </p>
