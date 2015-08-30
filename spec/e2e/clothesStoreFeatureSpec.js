@@ -111,7 +111,7 @@ describe('Clothes Store', function() {
       blueSuedeShoes.click();
       expect(voucherBtn.getText()).toEqual('£5 off your order');
       almondToeCourtShoes.click();
-      expect(voucherBtn.getText()).toEqual('£15 off when you buy at least one footwear item and spend over £75.00');
+      expect(voucherBtn.getText()).toEqual('£15 off footwear special offer');
     });
 
     it('When voucher is added, totals are updated', function() {
