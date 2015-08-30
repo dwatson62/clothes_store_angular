@@ -6,3 +6,51 @@ body {
 a {
   color: #00B7FF;
 }
+
+#product-list {
+  padding-top: 25px;
+  display: inline-table;
+}
+
+body.ng-scope {
+  background-image: url('../images/background.jpg');
+}
+
+.bg-success {
+  border: 1px solid black;
+}
+
+.product-box {
+  text-align: center;
+  vertical-align: center;
+  width: 200px;
+  height: 220px;
+  /*border: 1px solid black;*/
+}
+
+.addtocart-btn {
+  float: 50px;
+}
+
+#best-voucher-btn {
+  width: 200px;
+}
+
+.product-images {
+  border: 1px solid black;
+  width: 160px;
+  height: 140px;
+}
+
+.product-description {
+  height: 35px;
+}
+
+.btn-success.ng-binding {
+  border: 1px solid black;
+  text-align: center;
+  font-size: 17px;
+  color: black;
+  height: 50px;
+  width: 185px;
+}
