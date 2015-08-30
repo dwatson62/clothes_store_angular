@@ -18,28 +18,10 @@
   <body ng-controller='StoreControl as storeCtrl' ng-init='storeCtrl.init()'>
     <div class="row">
       <div class="col-md-8">
-        <div id="stuff" ng-repeat="product in storeCtrl.showProducts track by $index">
-          <img class="product-images" ng-src="/images/items{{$index}}.jpg" height='150'></img>
-          <p>{{ product.quantity }} {{ product.name }} <i> <strike> {{ product.old_price | currency: "£" }} </strike> {{ product.price | currency: "£"}} </i> </p>
-          <button  ng-hide='storeCtrl.outOfStock(product)' ng-click='storeCtrl.addToCart(product)'>Add to Cart</button>
-          <p ng-show='storeCtrl.outOfStock(product)'><i>Out of Stock</i></p>
-        </div>
+        <% include productList %>
       </div>
       <div class="col-md-4">
-        <h3>Shopping Cart</h3>
-        <div id='vouchers' ng-model='storeCtrl.bestVoucher'>
-          <p ><button ng-show="storeCtrl.bestVoucher" ng-click="storeCtrl.applyVoucher()">{{ storeCtrl.bestVoucher.description }}</button></p>
-        </div>
-        <div id='cart' ng-repeat='item in storeCtrl.shoppingCart'>
-          <p>{{ item.quantity }}x {{ item.name }} {{ item.price | currency: "£" }}</p>
-          <p><button ng-click="storeCtrl.removeFromCart(item)">Remove</button></p>
-        </div>
-        <p ng-model='storeCtrl.subTotal'>Total: {{ storeCtrl.subTotal | currency: "£" }}</p>
-        <p ng-model='storeCtrl.subTotal'>Discount: {{ storeCtrl.discount | currency: "£" }}</p>
-        <p ng-model='storeCtrl.subTotal'>Discounted total: {{ storeCtrl.total | currency: "£" }}</p>
-        <button ng-click='storeCtrl.emptyCart()'>Empty Cart</button>
-      </div>
+        <% include shoppingCart %>
     </div>
-
   </body>
 </html>

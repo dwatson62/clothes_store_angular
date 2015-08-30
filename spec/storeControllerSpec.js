@@ -24,7 +24,7 @@ describe('Store Controller', function () {
   });
 
   it('is defined', function () {
-    expect(ctrl).toBeDefined()
+    expect(ctrl).toBeDefined();
   });
 
   it('has a list of test items', function() {

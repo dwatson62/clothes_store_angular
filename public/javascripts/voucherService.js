@@ -2,10 +2,6 @@ var voucher = app.factory('VoucherService', ['$http', function($http) {
 
   var Voucher = function() {};
 
-  Voucher.prototype.sayHello = function() {
-    console.log('hello')
-  }
-
   Voucher.prototype.getVouchers = function() {
     $http.get('/javascripts/seedVouchers.json').
       then(function(response) {

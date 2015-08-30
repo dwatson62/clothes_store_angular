@@ -1,11 +1,10 @@
 var storeController = app.controller('StoreControl', ['$http', function($http) {
 
   var self = this;
-  self.category;
   self.shoppingCart = [];
   self.subTotal = 0;
   self.discount = 0;
-  self.total = 0;
+  self.discountedTotal = 0;
   self.bestVoucher = false;
 
   $('.dropdown-toggle').dropdown();
@@ -19,7 +18,7 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
       });
     $http.get('/javascripts/seedVouchers.json').
       then(function(response) {
-        self.sortVouchers(response.data)
+        self.sortVouchers(response.data);
       });
   };
 
@@ -51,7 +50,7 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
 
   self.applyVoucher = function() {
     self.discount = self.bestVoucher.discount;
-    self.total = self.subTotal - self.discount;
+    self.discountedTotal = self.subTotal - self.discount;
   };
 
   self.getCategories = function() {
@@ -74,7 +73,7 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
         'category': item.category,
         'price': item.price,
         'quantity': 1
-      }
+      };
       self.shoppingCart.push(newProduct);
     }
     self.decreaseProductQuantity(item);
@@ -106,7 +105,7 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
 
   self.calculateSubTotal = function() {
     var total = _.reduce(self.shoppingCart, function(sum, item) {
-      return sum + (item.price * item.quantity)
+      return sum + (item.price * item.quantity);
     }, 0);
     self.removeDiscounts();
     return total;
@@ -114,13 +113,13 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
 
   self.removeDiscounts = function() {
     self.discount = 0;
-    self.total = 0;
+    self.discountedTotal = 0;
   };
 
   self.removeFromCart = function(item) {
     var itemToBeRemoved = _.find(self.shoppingCart, function(element) {
-      return element.name === item.name
-    })
+      return element.name === item.name;
+    });
     var updatedCart = _.filter(self.shoppingCart, function(product) {
       product.name === item.name;
     });
@@ -137,7 +136,11 @@ var storeController = app.controller('StoreControl', ['$http', function($http) {
     self.shoppingCart = [];
     self.subTotal = self.calculateSubTotal();
     self.getBestVoucher();
-  }
+  };
+
+  self.hasEmptyCart = function() {
+    if (self.shoppingCart.length === 0) { return true; }
+  };
 
   self.outOfStock = function(item) {
     if (item.quantity === 0) { return true; }
