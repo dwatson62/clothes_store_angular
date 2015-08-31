@@ -17,7 +17,7 @@ This website mimics an online clothes store. Its features are:
 
 ## Approach
 
-My original decision was to use Ruby on Rails, however considering earlier feedback I chose to remake this as an SPA in Angular, as it will be more suitable, responsive and user friendly.
+My original decision was to use Ruby on Rails, however considering earlier feedback I chose to remake this as an SPA in Angular, as it will be more suitable, responsive and user friendly. Instead of a database, the products and vouchers are stored in json format and called in.
 
 I built up the project iteratively using TDD. Once I had the features and user stories in place, I refactored and separated concerns as I thought best, which involved refactoring the main controller out into three angular factories to handle the shopping cart, the shop and the vouchers. I also spent more time in creating a user friendly and better styled site using Bootstrap, and I hope this to be a massive improvement.
 
