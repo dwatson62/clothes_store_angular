@@ -9,7 +9,7 @@ describe('Shop service', function () {
     Shop = new ShopService();
     products = [];
     for (var i in testItems) {
-      products.push(_.clone(testItems[i]))
+      products.push(_.clone(testItems[i]));
     }
   }));
 
@@ -19,7 +19,7 @@ describe('Shop service', function () {
       'category': product.category,
       'price': product.price,
       'quantity': quantity
-    }
+    };
   };
 
   it('is defined', function() {
@@ -33,8 +33,8 @@ describe('Shop service', function () {
   });
 
   it('can increase stock quantity', function() {
-    var originalQuantity = products[0].quantity
-    var item = createItem(products[0], 1)
+    var originalQuantity = products[0].quantity;
+    var item = createItem(products[0], 1);
     Shop.increaseProductQuantity(products, item);
     expect(products[0].quantity).toBeGreaterThan(originalQuantity);
   });
@@ -52,8 +52,8 @@ describe('Shop service', function () {
     var item1 = createItem(products[0], 1);
     var item2 = createItem(products[1], 1);
     var cart = [item1, item2];
-    var price = item1.price + item2.price
-    expect(Shop.calculateSubTotal(cart)).toEqual(price)
+    var price = item1.price + item2.price;
+    expect(Shop.calculateSubTotal(cart)).toEqual(price);
   });
 
 });

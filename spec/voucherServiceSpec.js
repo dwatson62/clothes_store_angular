@@ -14,8 +14,8 @@ describe('Voucher service', function () {
       'subTotal': subTotal,
       'vouchers': vouchers,
       'cart': cart
-    }
-  }
+    };
+  };
 
   createItem = function(product, quantity) {
     return {
@@ -23,14 +23,14 @@ describe('Voucher service', function () {
       'category': product.category,
       'price': product.price,
       'quantity': quantity
-    }
+    };
   };
 
   beforeEach(inject(function(VoucherService) {
     Voucher = new VoucherService();
     products = [];
     for (var i in testItems) {
-      products.push(_.clone(testItems[i]))
+      products.push(_.clone(testItems[i]));
     }
 
   }));
@@ -47,7 +47,6 @@ describe('Voucher service', function () {
     var cart = [createItem(products[0], 1)];
     var voucher = vouchers[0];
     var count = Voucher.getQuantityOfVoucherCondition(voucher, cart);
-    console.log(vouchers)
     expect(count).toEqual(1);
   });
 

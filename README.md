@@ -3,7 +3,7 @@ Clothes Store Angular
 
 [![Build Status](https://travis-ci.org/dwatson62/clothes_store_angular.svg?branch=master)](https://travis-ci.org/dwatson62/clothes_store_angular)  [![Code Climate](https://codeclimate.com/github/dwatson62/clothes_store_angular/badges/gpa.svg)](https://codeclimate.com/github/dwatson62/clothes_store_angular)
 
-![NAME_OF_IMAGE](http://ENTER_URL)
+![screenshot](http://ENTER_URL)
 
 ## Synopsis
 
@@ -25,15 +25,15 @@ The vouchers were an interesting problem to solve. With the types of vouchers gi
 
 ## Program Layout
 
-- One view page, where all the features are displayed ```'app/views/order/index.html.erb'```
-- Two models: ```'app/models/order.rb'``` and ```'app/models/product.rb'``` the methods pertaining to vouchers are stored inside the former
-- The main controller ```'app/controllers/orders_controller.rb'``` handles the routes for the index and update (used for the vouchers)
-- Products controller ```'app/controllers/products.rb'``` handles routes for adding and removing products to the order
-- Feature tests are in ```'spec/features'```
+- One view page, where all the features are displayed ```views/index.ejs```
+- One angular controller ```public/javascripts/storeController.js```
+- Three Angular factories ```public/javascripts/shopService.js```, ```public/javascripts/cartService.js```, ```public/javascripts/voucherService.js```,
+- Unit tests are in ```spec/```
+- Feature tests are in ```spec/e2e/```
 
 ## To install from the terminal
 
-- ``` git clone https://github.com/dwatson62/clothes_store_angular```
+- ``` git clone https://github.com/dwatson62/clothes_store_angular ```
 - ``` cd clothes_store_angular ```
 - ``` npm start ```(this will install all node modules and bower components, then start the server)
 - Visit [http://localhost:3000](http://localhost:3000)

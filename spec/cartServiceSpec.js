@@ -13,7 +13,7 @@ describe('Cart service', function () {
       'category': product.category,
       'price': product.price,
       'quantity': quantity
-    }
+    };
   };
 
   beforeEach(inject(function(CartService) {
@@ -21,7 +21,7 @@ describe('Cart service', function () {
     shoppingCart = [];
     products = [];
     for (var i in testItems) {
-      products.push(_.clone(testItems[i]))
+      products.push(_.clone(testItems[i]));
     }
     item = createItem(products[0], 1);
     Cart.addToCart(shoppingCart, item);
