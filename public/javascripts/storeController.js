@@ -75,7 +75,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   self.removeFromCart = function(item) {
     var itemToBeRemoved = Cart.findItemInCart(self.shoppingCart, item);
     self.shoppingCart = Cart.removeFromCart(self.shoppingCart, itemToBeRemoved);
-    Shop.calculateSubTotal();
+    self.calculateSubTotal();
     Shop.increaseProductQuantity(self.products, itemToBeRemoved);
     self.removeDiscounts();
     self.getBestVoucher();
@@ -84,7 +84,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   self.emptyCart = function() {
     Shop.restoreQuantities(self.shoppingCart, self.products);
     self.shoppingCart = [];
-    self.subTotal = Shop.calculateSubTotal(self.shoppingCart);
+    self.calculateSubTotal();
     self.removeDiscounts();
     self.getBestVoucher();
   };

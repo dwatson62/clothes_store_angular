@@ -35,7 +35,7 @@ describe('Store Controller', function () {
     expect(ctrl.shoppingCart.length).toEqual(0);
   });
 
-  describe('Shopping cart', function() {
+  describe('Shopping', function() {
 
     var originalQuantity;
 
@@ -48,10 +48,6 @@ describe('Store Controller', function () {
 
       it('increases cart size', function() {
         expect(ctrl.shoppingCart.length).toEqual(1);
-      });
-
-      it('decreases product quantity by 1', function() {
-        expect(originalQuantity - ctrl.products[0].quantity).toEqual(1);
       });
 
       it('updates subtotal automatically', function() {
@@ -70,6 +66,10 @@ describe('Store Controller', function () {
 
       it('updates cart quantities when duplicates are added', function() {
         expect(ctrl.shoppingCart[0].quantity).toEqual(2);
+      });
+
+      it('does not increase cart length when duplicates are added', function() {
+        expect(ctrl.shoppingCart.length).toEqual(1);
       });
 
       it('updates subtotal automatically', function() {
@@ -91,12 +91,7 @@ describe('Store Controller', function () {
         expect(ctrl.shoppingCart.length).toEqual(0);
       });
 
-      it('restores previous stock level', function() {
-        ctrl.removeFromCart(ctrl.products[0]);
-        expect(ctrl.products[0].quantity).toEqual(5);
-      });
-
-      it('will update the subtotal', function() {
+      it('will update the subtotal automatically', function() {
         ctrl.removeFromCart(ctrl.products[0]);
         expect(ctrl.subTotal).toEqual(0);
       });
@@ -105,13 +100,6 @@ describe('Store Controller', function () {
         ctrl.addToCart(ctrl.products[1]);
         ctrl.emptyCart();
         expect(ctrl.shoppingCart.length).toEqual(0);
-      });
-
-      it('emptying restores stock levels', function() {
-        ctrl.addToCart(ctrl.products[1]);
-        ctrl.emptyCart();
-        expect(originalQuantity1).toEqual(ctrl.products[0].quantity);
-        expect(originalQuantity2).toEqual(ctrl.products[1].quantity);
       });
 
     });

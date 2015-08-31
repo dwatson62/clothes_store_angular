@@ -33,7 +33,7 @@ var cart = app.factory('CartService', [function() {
 
   Cart.prototype.removeFromCart = function(cart, item) {
     cart = _.filter(cart, function(product) {
-      return product != item;
+      return product.name != item.name;
     });
     return cart;
   };

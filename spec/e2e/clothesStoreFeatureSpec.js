@@ -5,6 +5,7 @@ beforeEach(function(){
 
 var almondToeCourtShoes = element(by.id('product-btn0'));
 var blueSuedeShoes = element(by.id('product-btn1'));
+var categoryMensCasual = element(by.id('category0'));
 var subTotal = element(by.model('storeCtrl.subTotal'));
 var shoppingCart = element(by.id('cart'));
 var emptyCartMsg = element(by.id('empty-cart-msg'));
@@ -33,8 +34,19 @@ describe('Clothes Store', function() {
       expect(productList.count()).toBeGreaterThan(0);
     });
 
+    it('Displays an image with a product', function() {
+      var productImage = element(by.id('product-images1'));
+      expect(productImage.isDisplayed()).toBeTruthy();
+    });
+
+    it('Can change categories', function() {
+      categoryMensCasual.click();
+      var productList = element.all(by.repeater('product in storeCtrl.currentProducts'));
+      expect(productList.get(0).getText()).toContain('Fine Stripe Short Sleeve Shirt');
+    });
+
     it('If product is reduced, old price is also displayed', function() {
-      element(by.id('category0')).click();
+      categoryMensCasual.click();
       var reducedItem = element(by.id('product1'));
       expect(reducedItem.getText()).toContain('£49.99 £39.99')
     });
@@ -45,7 +57,7 @@ describe('Clothes Store', function() {
 
   });
 
-  describe('While shopping', function() {
+  xdescribe('While shopping', function() {
 
     beforeEach(function() {
       almondToeCourtShoes.click();
@@ -87,7 +99,7 @@ describe('Clothes Store', function() {
 
   });
 
-  describe('Vouchers', function() {
+  xdescribe('Vouchers', function() {
 
     var discount = element(by.id('applied-discount'));
     var discountedTotal = element(by.id('discounted-total'));

@@ -18,11 +18,9 @@ module.exports = function(config) {
         'bower_components/angular/angular.js',
         'bower_components/angular-mocks/angular-mocks.js',
         'bower_components/angular-route/angular-route.js',
-        'bower_components/angular-resource/angular-resource.js',
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap/js/dropdown.js',
         'node_modules/underscore/underscore.js',
         'public/javascripts/*.js',
+        'spec/testItems.js',
         'spec/*.js',
     ],
 
@@ -68,6 +66,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true
+    singleRun: false
   });
 };
