@@ -3,7 +3,7 @@ Clothes Store Angular
 
 [![Build Status](https://travis-ci.org/dwatson62/clothes_store_angular.svg?branch=master)](https://travis-ci.org/dwatson62/clothes_store_angular)  [![Code Climate](https://codeclimate.com/github/dwatson62/clothes_store_angular/badges/gpa.svg)](https://codeclimate.com/github/dwatson62/clothes_store_angular)
 
-![screenshot](http://ENTER_URL)
+![screenshot](https://github.com/dwatson62/clothes_store_angular/blob/master/public/images/screenshot.png)
 
 ## Synopsis
 
@@ -17,11 +17,15 @@ This website mimics an online clothes store. Its features are:
 
 ## Approach
 
-My first decision was to use Ruby on Rails, as these are technologies I felt more confident using and felt were appropriate for this website. I originally had three models, products, orders and users. Later I removed the user model as it was not required for this version.
+My original decision was to use Ruby on Rails, however considering earlier feedback I chose to remake this as an SPA in Angular, as it will be more suitable, responsive and user friendly.
 
-Another reason for using Rails was that I felt that Active Record associations and methods would be useful for this website. I had planned a has_and_belongs_to_many association between the products and the order, and Active Record allowed me to easily create a join table between the two models.
+I built up the project iteratively using TDD. Once I had the features and user stories in place, I refactored and separated concerns as I thought best, which involved refactoring the main controller out into three angular factories to handle the shopping cart, the shop and the vouchers. I also spent more time in creating a user friendly and better styled site using Bootstrap, and I hope this to be a massive improvement.
 
-The vouchers were an interesting problem to solve. With the types of vouchers given, I saw that not all of them could be used at once, and that only one needed to be available at a time. I did not think it necessary to offer a $10 off discount and a $15 off discount for the same order. Moreover, I did not want to display a voucher that could not be used, as I did not think this would be a good user experience. My solution was to store each voucher as a hash, with the necessary properties. All the vouchers were stored in an array, sorted by the largest discount. Each time the main page was loaded, the program would search through the voucher array, and return the first one that met the correct conditions. This process ensured that only the most appropriate voucher would be available for that order.
+To assist with the javascript logic, I used an external library (Underscore.js). This gave me access to more terse methods such as filter, each, reduce and many others which helped refactor the code further and made it more readable. It also assisted in the tests where I used _.clone() on the product objects so the originals would not be modified.
+
+My voucher factory works in a similar way to before. As I saw it, not all vouchers could be used at once, and that only one needed to be available at a time. I did not think it necessary to offer a $10 off discount and a $15 off discount for the same order. Moreover, I did not want to display a voucher that could not be used, as I did not think this would be a good user experience. This time my solution was to store each voucher as a an object with the necessary properties, and then these were stored in an array, sorted by the largest discount. Each time a product is added to the cart, the program would search through the voucher array, and return the first one that met the correct conditions. This process ensured that only the most appropriate voucher would be available for that order. Once a product was removed, that vouchers discount is removed (if applied) and the program will return a new appropriate voucher.
+
+I tested the controller and factories using Jasmine and Karma, and the features using Protractor. I had difficulty in testing the voucher factory and so those tests are marked as pending. The errors occur during a _.filter() function provided by Underscore.js, which has inside an includes() function from native javascript. While this function works during development, it throws a TypeError exception when testing on a PhantomJS browser. However, when switching to a Chrome browser these tests pass.
 
 ## Program Layout
 
