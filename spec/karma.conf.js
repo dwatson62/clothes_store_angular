@@ -21,7 +21,7 @@ module.exports = function(config) {
         'node_modules/underscore/underscore.js',
         'public/javascripts/*.js',
         'spec/testItems.js',
-        'spec/*.js',
+        'spec/voucherServiceSpec.js',
     ],
 
 
@@ -66,6 +66,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
+    singleRun: true
   });
 };

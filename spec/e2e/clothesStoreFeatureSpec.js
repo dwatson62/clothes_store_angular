@@ -57,7 +57,7 @@ describe('Clothes Store', function() {
 
   });
 
-  xdescribe('While shopping', function() {
+  describe('While shopping', function() {
 
     beforeEach(function() {
       almondToeCourtShoes.click();
@@ -99,7 +99,7 @@ describe('Clothes Store', function() {
 
   });
 
-  xdescribe('Vouchers', function() {
+  describe('Vouchers', function() {
 
     var discount = element(by.id('applied-discount'));
     var discountedTotal = element(by.id('discounted-total'));
