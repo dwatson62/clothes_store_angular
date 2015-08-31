@@ -27,6 +27,8 @@ My voucher factory works in a similar way to before. As I saw it, not all vouche
 
 I tested the controller and factories using Jasmine and Karma, and the features using Protractor. I had difficulty in testing the voucher factory and so those tests are marked as pending. The errors occur during a _.filter() function provided by Underscore.js, which has inside an includes() function from native javascript. While this function works during development, it throws a TypeError exception when testing on a PhantomJS browser. However, when switching to a Chrome browser these tests pass.
 
+Additionally the travis build is currently failing due to a few protractor tests, which pass locally but not on Travis. I have not been able to find out why.
+
 ## Program Layout
 
 - One view page, where all the features are displayed ```views/index.ejs```

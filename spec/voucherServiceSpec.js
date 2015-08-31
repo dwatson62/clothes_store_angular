@@ -43,14 +43,14 @@ describe('Voucher service', function () {
     expect(vouchers.length).toEqual(3);
   });
 
-  it('can determine how many of a category has been ordered', function() {
+  xit('can determine how many of a category has been ordered', function() {
     var cart = [createItem(products[0], 1)];
     var voucher = vouchers[0];
     var count = Voucher.getQuantityOfVoucherCondition(voucher, cart);
     expect(count).toEqual(1);
   });
 
-  describe('Offers the best voucher for', function() {
+  xdescribe('Offers the best voucher for', function() {
 
     it('orders under £50', function() {
       var item1 = createItem(products[1], 1);
