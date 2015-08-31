@@ -9,7 +9,7 @@ Clothes Store Angular
 
 This website mimics an online clothes store. Its features are:
 
-- Displays specified products with: description, category, current price (and old price if given) and availability.
+- Displays products filtered by category with: description, current price, old price if given, and availability.
 - Users can add and remove items to the shopping cart and remove them.
 - Users can select an available voucher provided certain criteria is met.
 - Vouchers that cannot be used are not displayed
