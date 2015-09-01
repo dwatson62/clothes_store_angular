@@ -136,6 +136,15 @@ describe('Clothes Store', function() {
       expect(discountedTotal.getText()).toEqual('Discounted total: £84.00');
     });
 
+    it('Once voucher is applied, a message is displayed', function() {
+      almondToeCourtShoes.click();
+      var voucherBtn = element(by.id('best-voucher-btn'));
+      voucherBtn.click();
+      var voucherMsg = element(by.id('voucher-added-msg'));
+      expect(voucherBtn.isDisplayed()).toBeFalsy();
+      expect(voucherMsg.getText()).toEqual('Voucher added')
+    });
+
     it('When item is removed, applied voucher is also removed', function() {
       almondToeCourtShoes.click();
       var voucherBtn = element(by.id('best-voucher-btn'));

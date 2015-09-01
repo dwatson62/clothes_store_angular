@@ -2,6 +2,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
 
   var self = this;
   self.shoppingCart = [];
+  self.voucherApplied = false;
 
   var Voucher = new VoucherService();
   var Cart = new CartService();
@@ -34,7 +35,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   };
 
   self.availableVoucher = function() {
-    if (self.shoppingCart.length === 0) { return false; }
+    if (self.shoppingCart.length === 0 || self.voucherApplied == true) { return false; }
     if (self.bestVoucher) { return true; }
   };
 
@@ -54,11 +55,13 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   self.applyVoucher = function() {
     self.discount = self.bestVoucher.discount;
     self.discountedTotal = self.subTotal - self.discount;
+    self.voucherApplied = true;
   };
 
   self.removeDiscounts = function() {
     self.discount = 0;
     self.discountedTotal = 0;
+    self.voucherApplied = false;
   };
 
   self.addToCart = function(item) {
