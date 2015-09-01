@@ -14,9 +14,12 @@ var voucher = app.factory('VoucherService', ['$http', function($http) {
   };
 
   Voucher.prototype.getQuantityOfVoucherCondition = function(currentVoucher, shoppingCart) {
-    var quantity = _.filter(shoppingCart, function(currentItem) {
-      return currentItem.category.includes(currentVoucher.condition);
-    }).length;
+    var quantity = 0;
+    _.each(shoppingCart, function(item) {
+      if (item.category.indexOf(currentVoucher.condition) > -1) {
+        quantity ++;
+      }
+    });
     return quantity;
   };
 

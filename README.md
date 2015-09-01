@@ -25,9 +25,7 @@ To assist with the javascript logic, I used an external library (Underscore.js).
 
 My voucher factory works in a similar way to before. As I saw it, not all vouchers could be used at once, and that only one needed to be available at a time. I did not think it necessary to offer a $10 off discount and a $15 off discount for the same order. Moreover, I did not want to display a voucher that could not be used, as I did not think this would be a good user experience. This time my solution was to store each voucher as a an object with the necessary properties, and then these were stored in an array, sorted by the largest discount. Each time a product is added to the cart, the program would search through the voucher array, and return the first one that met the correct conditions. This process ensured that only the most appropriate voucher would be available for that order. Once a product was removed, that vouchers discount is removed (if applied) and the program will return a new appropriate voucher.
 
-I tested the controller and factories using Jasmine and Karma, and the features using Protractor. I had difficulty in testing the voucher factory and so those tests are marked as pending. The errors occur during a _.filter() function provided by Underscore.js, which has inside an includes() function from native javascript. While this function works during development, it throws a TypeError exception when testing on a PhantomJS browser. However, when switching to a Chrome browser these tests pass.
-
-Additionally the travis build is currently failing due to a few protractor tests, which pass locally but not on Travis. I have not been able to find out why.
+I tested the controller and factories using Jasmine and Karma, and the features using Protractor. At the moment the travis build is currently failing due to a few protractor tests, which pass locally but not on Travis. I have not been able to find out why.
 
 ## Program Layout
 

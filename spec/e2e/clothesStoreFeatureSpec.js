@@ -103,9 +103,9 @@ describe('Clothes Store', function() {
 
     var discount = element(by.id('applied-discount'));
     var discountedTotal = element(by.id('discounted-total'));
-    var voucherBtn = element(by.id('best-voucher-btn'));
 
     it('Displays no voucher when cart is empty', function() {
+      var voucherBtn = element(by.id('best-voucher-btn'));
       expect(voucherBtn.isDisplayed()).toBeFalsy();
     });
 
@@ -116,11 +116,13 @@ describe('Clothes Store', function() {
 
     it('When products are added, voucher button is displayed', function() {
       almondToeCourtShoes.click();
+      var voucherBtn = element(by.id('best-voucher-btn'));
       expect(voucherBtn.isDisplayed()).toBeTruthy();
     });
 
     it('When more products are added, an improved voucher is displayed', function() {
       blueSuedeShoes.click();
+      var voucherBtn = element(by.id('best-voucher-btn'));
       expect(voucherBtn.getText()).toEqual('£5 off your order');
       almondToeCourtShoes.click();
       expect(voucherBtn.getText()).toEqual('£15 off footwear special offer');
@@ -128,6 +130,7 @@ describe('Clothes Store', function() {
 
     it('When voucher is added, totals are updated', function() {
       almondToeCourtShoes.click();
+      var voucherBtn = element(by.id('best-voucher-btn'));
       voucherBtn.click();
       expect(discount.getText()).toEqual('Discount: £15.00');
       expect(discountedTotal.getText()).toEqual('Discounted total: £84.00');
@@ -135,6 +138,7 @@ describe('Clothes Store', function() {
 
     it('When item is removed, applied voucher is also removed', function() {
       almondToeCourtShoes.click();
+      var voucherBtn = element(by.id('best-voucher-btn'));
       voucherBtn.click();
       emptyCartBtn.click();
       expect(discount.isDisplayed()).toBeFalsy();
