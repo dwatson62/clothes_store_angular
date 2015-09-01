@@ -62,6 +62,7 @@ var storeController = app.controller('StoreControl', ['$http', 'VoucherService',
   };
 
   self.addToCart = function(item) {
+    self.removeDiscounts();
     Cart.addToCart(self.shoppingCart, item);
     Shop.decreaseProductQuantity(self.products, item);
     self.calculateSubTotal();

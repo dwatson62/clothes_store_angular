@@ -7,16 +7,6 @@ describe('Store Controller', function () {
   beforeEach(inject(function($controller) {
     ctrl = $controller('StoreControl');
     ctrl.products = testItems;
-
-  //   httpBackend = $httpBackend;
-  //   httpBackend
-  //   .expectGET("/javascripts/seedData.json")
-  //     .respond(
-  //     { items: testItems }
-  //   );
-
-  // return httpBackend;
-
   }));
 
   afterEach(function() {
@@ -100,6 +90,12 @@ describe('Store Controller', function () {
         ctrl.addToCart(ctrl.products[1]);
         ctrl.emptyCart();
         expect(ctrl.shoppingCart.length).toEqual(0);
+      });
+
+      it('removes any applied discounts', function() {
+        ctrl.discount = 15;
+        ctrl.emptyCart();
+        expect(ctrl.discount).toEqual(0);
       });
 
     });

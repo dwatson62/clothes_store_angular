@@ -20,8 +20,7 @@ module.exports = function(config) {
         'bower_components/angular-route/angular-route.js',
         'node_modules/underscore/underscore.js',
         'public/javascripts/*.js',
-        'spec/testItems.js',
-        'spec/voucherServiceSpec.js',
+        'spec/*.js',
     ],
 
 
@@ -61,7 +60,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode
